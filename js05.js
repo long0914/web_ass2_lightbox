@@ -1,14 +1,6 @@
-"use strict";
-/*    JavaScript 7th Edition
-      Chapter 5
-      Chapter Case
 
-      Application to generate a slide show
-      Author: 
-      Date:   
 
-      Filename: js05.js
-*/
+
 
 // Title of the slideshow
 let lightboxTitle = "My Western Vacation";
@@ -36,19 +28,24 @@ imgCaptions[11]="Longs Peak Trail (Rocky Mountain National Park)";
 // Count of images in the slideshow
 let imgCount = imgFiles.length;
 
+let favouriteImages = [];
 
+window.addEventListener("load", createLightbox);
 
 
 function createLightbox() {
    let imageCount = imgFiles.length;
    let lightBox = document.getElementById("lightbox");
+   console.log("lightBox");
    let currentSlide = 1;
    let runShow = true;
    let showRunning;
+let article = document.querySelector("article");
+
    
    let lbTitle = document.createElement("h1");
    lbTitle.id = "lbTitle";
-   lbTitle.textContent = slidesTitle;
+   lbTitle.textContent = lightboxTitle;
    lightBox.appendChild(lbTitle);
    
    let lbCounter = document.createElement("div");
@@ -77,8 +74,22 @@ function createLightbox() {
    let lbImages = document.createElement("div");
    lbImages.id = "lbImages";
    lightBox.appendChild(lbImages);
+
+   let lbFav = document.createElement("div");
+   lbFav.id = "lbFav";
+   lbFav.textContent = "Favourites";
+   article.appendChild(lbFav);
+   lbFav.onclick = function(){
    
    
+
+
+   }
+
+
+
+   
+
    for (let i = 0; i < imageCount; i++) {
       let image = document.createElement("img");
       image.src = imgFiles[i];
@@ -124,9 +135,14 @@ function createLightbox() {
       }
    }
    
+
+
+
+
    function createModal() {
       let modalWindow = document.createElement("div");
       modalWindow.id = "activeModal";
+
       let figureBox = document.createElement("figure");
       modalWindow.appendChild(figureBox);
       
@@ -136,20 +152,47 @@ function createLightbox() {
       let figureCaption = document.createElement("figcaption");
       figureCaption.textContent = modalImage.alt;
       figureBox.appendChild(figureCaption);
-      
-      let closeBox = document.createElement("div");
-      closeBox.id = "modalClose";
-      closeBox.innerHTML = "&times;";
-      closeBox.onclick = function() {
-         document.body.removeChild(modalWindow);
+
+
+      //add favorite button
+      let favButton = document.createElement("div");
+      favButton.id = "favButton";
+      favButton.textContent = "Add to Favorites";
+      modalWindow.appendChild(favButton);
+       favButton.onclick = function() {
+         addFavourite(modalImage.src);
+         //debug here
+         console.log(modalImage.src);
+     };  
+     let closeBox = document.createElement("div");
+         closeBox.id = "modalClose";
+         closeBox.innerHTML = "&times;";
+         closeBox.onclick = function() {
+          document.body.removeChild(modalWindow);
       }
-      
       modalWindow.appendChild(closeBox);
       
       document.body.appendChild(modalWindow);
-   }
+
+
+      
+      }
+      function addFavourite(imageSrc) {
+         if (favouriteImages.length < 5) {
+             favouriteImages.push(imageSrc);
+         } else {
+             alert("You can only have 5 favourite images. First image will be removed.");
+             favouriteImages.shift();
+             favouriteImages.push(imageSrc);
+         }
+         console.log(favouriteImages);
+     }
+
+      
+         
+
+      }
+      
+  
+
    
-}
-
-
-window.addEventListener("load", createLightbox);
