@@ -17,7 +17,7 @@ div#lightbox h1#lbTitle {
 }
 
 /* Styles for the left and right arrows to move through the slideshow */
-div#lightbox div#lbPrev, div#lightbox div#lbNext ,div#favButton, div#lbFav{
+div#lightbox div#lbPrev, div#lightbox div#lbNext{
    position: absolute;
    width: 5%;
    height: 30px;
@@ -34,9 +34,34 @@ div#lightbox div#lbPrev, div#lightbox div#lbNext ,div#favButton, div#lbFav{
    user-select: none;
 }
 
+div#favButton{
+   position: absolute;
+   width: 20vh;
+   height: 30px;
+   color: #e2420c;
+   text-shadow: 2px 2px 2px black;
+   font-size: 20px;
+   font-weight: bold;
+   left: auto;
+   bottom: 10vh;
+   line-height: 30px;
+   text-align: center;
+   z-index: 1;
+   background: rgba(0,0, 0, 0.0);
+   cursor: pointer;
+   user-select: none;
+   
+}
+
+
+
+
 /* Hovering styles for the left and right arrows */
 div#lightbox div#lbPrev:hover, div#lightbox div#lbNext:hover, div#favButton:hover {
    background: rgba(0,0,0,0.5);
+   color: white; /* Change text color to white */
+   transition: all 0.3s ease; /* Add transition effect */
+
 }
 
 /* Horizontal position of the left arrow */
@@ -44,16 +69,37 @@ div#lightbox div#lbPrev {
    left: 0px;
 }
 
-div#favButton , div#lbFav{
+div#favButton{
+
    left: 47.5%;
    top: 85vh;
-   border: 2px solid #CCDBDC;
+   border: 2px solid black;
    border-radius: 20px;
    padding: 5px;
    font-size: 20px;
    z-index: 2;
+   left: 40vw;
+   bottom: 10vh;
   
 }
+
+div#lbFav{
+   position: fixed;
+   height: 20vh;
+   left: 50%;
+   bottom: 10vh;
+transform: translateX(-50%);
+   border: 2px solid black;
+   border-radius: 20px;
+   padding: 5px;
+   font-size: 20px;
+   z-index: 1;
+   display: flex;
+   justify-content: center;
+  justify-content: center;
+}
+
+
 
 
 /* Horizontal position of the right arrow */
@@ -147,7 +193,7 @@ div#lbImages img:hover {
 /* Styles for the overlay */
 div#activeModal {
    position: fixed;                        /* Overlay is fixed on screen */
-   z-index: 1;                             /* Overlay sits on top of other content */
+   z-index: 2;                             /* Overlay sits on top of other content */
    width: 100vw;                            /* Full width */
    height: 100vh;                           /* Full height */
    top: 0;

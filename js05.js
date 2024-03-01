@@ -79,13 +79,7 @@ let article = document.querySelector("article");
    lbFav.id = "lbFav";
    lbFav.textContent = "Favourites";
    article.appendChild(lbFav);
-   lbFav.onclick = function(){
    
-   
-
-
-   }
-
 
 
    
@@ -178,27 +172,67 @@ let article = document.querySelector("article");
 
 
       
-      }
-      function addFavourite(imageSrc) {
+      }function addFavourite(imageSrc) {
+    let url = new URL(imageSrc);
+    let filename = url.pathname.slice(1); // remove the leading slash
 
-         let url = new URL(imageSrc);
-         let filename = url.pathname.slice(1); // remove the leading slash
-         console.log("added filename: " + filename);
-         if (favouriteImages.length < 5) {
-             favouriteImages.push(filename);
-         } else {
-             alert("You can only have 5 favourite images. First image will be removed.");
-             favouriteImages.shift();
-             favouriteImages.push(filename);
-         }
-         console.log(favouriteImages);
-     }
+    if (favouriteImages.length >= 5) {
+        alert("You can only have 5 favourite images. First image will be removed.");
+        favouriteImages.shift();
+    }
 
-      
-         
+    if (!favouriteImages.includes(filename)) {
+        favouriteImages.push(filename);
+    }
 
-      }
-      
-  
+    updateFavourites();
+}
 
-   
+function updateFavourites() {
+    let favBox = document.getElementById("lbFav");
+    favBox.innerHTML = ''; // Clear the favBox
+
+    for (let i = 0; i < favouriteImages.length; i++) {
+        let newDiv = document.createElement("div");
+        let newImg = document.createElement("img");
+
+        newImg.src = favouriteImages[i];
+        newImg.classList.add("favImg");
+        newImg.style.height = "20vh";
+        newImg.addEventListener("click", addRemoveFavourite);
+
+        newDiv.appendChild(newImg);
+        favBox.appendChild(newDiv);
+    }
+}
+
+function addRemoveFavourite() {
+    if (this.parentNode.childNodes.length === 1) {
+        let removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.onclick = removeFavourite;
+        this.parentNode.appendChild(removeButton);
+    }
+}
+
+function removeFavourite() {
+    let imgSrc = this.parentNode.firstChild.src;
+    
+    let url = new URL(imgSrc);// Create a URL object
+    let filename = url.pathname.slice(1); // Remove the leading slash
+    console.log("filename" + filename);
+
+    // Find the index of the image in the favouriteImages array
+    let index = favouriteImages.indexOf(filename);
+
+    // If the image is found in the array, remove it
+    if (index !== -1) {
+        favouriteImages.splice(index, 1);
+    }
+
+    // Remove the image element from the DOM
+    this.parentNode.parentNode.removeChild(this.parentNode);
+
+    updateFavourites();
+}
+}
