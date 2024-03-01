@@ -160,9 +160,11 @@ let article = document.querySelector("article");
       favButton.textContent = "Add to Favorites";
       modalWindow.appendChild(favButton);
        favButton.onclick = function() {
+
+
          addFavourite(modalImage.src);
          //debug here
-         console.log(modalImage.src);
+         console.log(modalImage);
      };  
      let closeBox = document.createElement("div");
          closeBox.id = "modalClose";
@@ -178,12 +180,16 @@ let article = document.querySelector("article");
       
       }
       function addFavourite(imageSrc) {
+
+         let url = new URL(imageSrc);
+         let filename = url.pathname.slice(1); // remove the leading slash
+         console.log("added filename: " + filename);
          if (favouriteImages.length < 5) {
-             favouriteImages.push(imageSrc);
+             favouriteImages.push(filename);
          } else {
              alert("You can only have 5 favourite images. First image will be removed.");
              favouriteImages.shift();
-             favouriteImages.push(imageSrc);
+             favouriteImages.push(filename);
          }
          console.log(favouriteImages);
      }
